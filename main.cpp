@@ -113,6 +113,22 @@ public:
         delete temp;
     }
 
+    void leave_line(int pos) {
+        if (!head) {
+            cout << "List is empty." << endl;
+            return;
+        }    
+        Node* temp = head;
+        for (int i = 1; i < pos; i++){
+            if (!temp) {
+                cout << "Position doesn't exist." << endl;
+                return;
+            }
+        }
+        cout<<"\t\t"<<temp->data<<" leaves the line.";
+        delete_pos(pos);            
+    }
+
     void push_back(string v) {
         Node* newNode = new Node(v);
         if (!tail)
@@ -183,6 +199,11 @@ public:
         delete temp;
     }
 
+    void leave_end_of_line(){
+        cout<<"\t"<<tail->data<<" exits the rear of the line.\n";
+        pop_back();
+    }
+
     ~DoublyLinkedList() {
         while (head) {
             Node* temp = head;
@@ -237,26 +258,29 @@ int main() {
             for(int i=0;i<FIRSTCUSTOMERS;i++){
                 CoffeeShop.join_line(randomname(names));
             }
-                CoffeeShop.print();
-
+            CoffeeShop.print();
             continue;
         }
-        cout<<""
+        cout<<"Time Step #"<<i+1<<":\n";
         //after the first five minutes:
         //help customer
         if((rand()%100)+1 < HELPCUSTOMERPROB) {
             CoffeeShop.serve_front();
         }
-        /*
+
         //new customer
         if((rand()%100+1) < NEWCUSTOMERPROB){
+            CoffeeShop.join_line(randomname(names));
         }
         //Customer at end of line leaves
         if((rand()%100+1) < LASTCUSTOMERLEAVEPROB){
+            CoffeeShop.leave_end_of_line();
         }
         //Customer at any point of line leaves
         if((rand()%100+1) < ANYCUSTOMERLEAVEPROB){
+            CoffeShop.leave_line(/*random val between last and first...*/);
         }
+    /*
     */
     CoffeeShop.print();
     }
