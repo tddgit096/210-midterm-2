@@ -5,8 +5,9 @@
 using namespace std;
 
 const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
-//coffeshop constants
+//Coffee Shop Constants
 const int FIRSTCUSTOMERS = 5, MAXTIME = 20, OPENINGTIME = 1;
+//Event probabilities in percentages:
 const int HELPCUSTOMERPROB = 40, NEWCUSTOMERPROB = 60, LASTCUSTOMERLEAVEPROB = 20, ANYCUSTOMERLEAVEPROB=10, VIPPROB = 10;
 
 class DoublyLinkedList {
@@ -113,7 +114,7 @@ public:
         temp->next->prev = tempPrev;
         delete temp;
     }
-
+    //leave_line outputs the status of the customer leaving then calls delete_pos on them.
     void leave_line(int pos) {
         if (!head) {
             cout << "List is empty." << endl;
@@ -140,7 +141,7 @@ public:
             tail = newNode;
         }
     }
-
+    //join_line outputs the status of the customer joining then calls push_back on them.
     void join_line(string v){
         cout<<"\t"<<v<<" joins the line.\n";
         push_back(v);
@@ -156,7 +157,7 @@ public:
             head = newNode;
         }
     }
-
+    //VIP_joins outputs the status of the customer joining then calls push_front on them.
     void VIP_joins(string v) {
         cout<<"\t"<<v<<" (VIP) joins the front of the line.\n";
         push_front(v);
@@ -179,7 +180,7 @@ public:
             head = tail = nullptr;
         delete temp;
     }
-
+    //serve_front outputs the status of the customer being served at the beginning of the line, then calls pop front on them.
     void serve_front() {
         if (!head) {
             cout << "List is empty." << endl;
@@ -204,7 +205,7 @@ public:
             head = tail = nullptr;
         delete temp;
     }
-
+    //leave end of line outputs the status of the customer leaving the rear of the line then calls pop_back on them.
     void leave_end_of_line(){
         cout<<"\t"<<tail->data<<" exits the rear of the line.\n";
         pop_back();
@@ -230,7 +231,7 @@ public:
             current = current->next;
         }
     }
-
+    //returns the size of the list as an int
     int getListSize(){
         int size=0;
         Node* current = head;
@@ -261,14 +262,17 @@ string randomname(vector <string>);
 int main() {
     srand(time(NULL));
     DoublyLinkedList CoffeeShop;
-    //populate list of random names into vector
-    vector <string> names;
+    vector <string> names;    //populate list of random names into vector
     fstream file;
     file.open("names.txt");
     if(file.good()){
         string line;
         while(getline(file,line))
             names.push_back(line);
+    }
+    else{
+        cout<<"Names file not found. Terminating.\n";
+        return 0;
     }
     for(int minute=0;minute<MAXTIME;minute++){
         if(minute<OPENINGTIME){ //the opening time has a number of FIRSTCUSTOMERS arrive.
@@ -285,7 +289,6 @@ int main() {
         if((rand()%100)+1 < HELPCUSTOMERPROB) {
             CoffeeShop.serve_front();
         }
-
         //new customer
         if((rand()%100+1) < NEWCUSTOMERPROB){
             CoffeeShop.join_line(randomname(names));
