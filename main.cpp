@@ -5,6 +5,7 @@ using namespace std;
 
 const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
 const int FIRSTCUSTOMERS = 5, MAXTIME = 20;
+const int HELPCUSTOMERPROB = 40, NEWCUSTOMERPROB = 60, LASTCUSTOMERDECLINEPROB = 20, ANYCUSTOMERDECLINEPROB=10, VIPPROB = 10;
 
 class DoublyLinkedList {
 private:
@@ -205,14 +206,25 @@ int main() {
     DoublyLinkedList CoffeeShop;
     //populate list of random names into vector
     vector <string> names;
-    for
-
+    fstream file;
+    file.open("names.txt");
+    if(file.good()){
+        string line;
+        while(getline(file,line))
+            names.push_back(line);
+    }
 
     for(int minute=0;minute<MAXTIME;minute++)
         if(minute<FIRSTCUSTOMERS){
-            CoffeeShop.push_back();
+            CoffeeShop.push_back(/*random customer*/);
         }
-    }
-    
+
+    /*
+        //help customer
+        if*((rand()%100+1) < HELPCUSTOMERPROB)  
+    */
     return 0;
 }
+
+//rand()%names.size()
+
