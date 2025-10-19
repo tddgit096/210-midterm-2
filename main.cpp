@@ -304,8 +304,7 @@ int main() {
         if((rand()%100+1) < VIPPROB){
             CoffeeShop.VIP_joins(randomname(names));
         }
-
-    CoffeeShop.print();
+        CoffeeShop.print();
     }
     return 0;
 }
