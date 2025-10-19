@@ -5,6 +5,7 @@
 using namespace std;
 
 const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
+//coffeshop constants
 const int FIRSTCUSTOMERS = 5, MAXTIME = 20, OPENINGTIME = 1;
 const int HELPCUSTOMERPROB = 40, NEWCUSTOMERPROB = 60, LASTCUSTOMERLEAVEPROB = 20, ANYCUSTOMERLEAVEPROB=10, VIPPROB = 10;
 
@@ -125,7 +126,7 @@ public:
                 return;
             }
         }
-        cout<<"\t\t"<<temp->data<<" leaves the line.";
+        cout<<"\t"<<temp->data<<" leaves the line.\n";
         delete_pos(pos);            
     }
 
@@ -154,6 +155,11 @@ public:
             head->prev = newNode;
             head = newNode;
         }
+    }
+
+    void VIP_joins(string v) {
+        cout<<"\t"<<v<<" (VIP) joins the front of the line.\n";
+        push_front(v);
     }
     
     void pop_front() {
@@ -211,6 +217,7 @@ public:
             delete temp;
         }
     }
+
     void print() {
         Node* current = head;
         if (!current) {
@@ -222,6 +229,16 @@ public:
             cout <<"\t\t"<<current->data << endl;
             current = current->next;
         }
+    }
+
+    int getListSize(){
+        int size=0;
+        Node* current = head;
+        while(current){
+            current=current->next;
+            size++;
+        }
+        return size;
     }
 
     void print_reverse() {
@@ -238,6 +255,7 @@ public:
     }
 };
 
+//function that returns a random name from the names vector.
 string randomname(vector <string>);
 
 int main() {
@@ -261,7 +279,7 @@ int main() {
             CoffeeShop.print();
             continue;
         }
-        cout<<"Time Step #"<<i+1<<":\n";
+        cout<<"Time Step #"<<minute+1<<":\n";
         //after the first five minutes:
         //help customer
         if((rand()%100)+1 < HELPCUSTOMERPROB) {
@@ -278,10 +296,12 @@ int main() {
         }
         //Customer at any point of line leaves
         if((rand()%100+1) < ANYCUSTOMERLEAVEPROB){
-            CoffeShop.leave_line(/*random val between last and first...*/);
+            CoffeeShop.leave_line(rand()%CoffeeShop.getListSize());
         }
-    /*
-    */
+        if((rand()%100+1) < VIPPROB){
+            CoffeeShop.VIP_joins(randomname(names));
+        }
+
     CoffeeShop.print();
     }
     return 0;
@@ -290,9 +310,3 @@ int main() {
 string randomname(vector <string> input){
     return input[rand()%input.size()];
 }
-
-//function: customer comes to end of line
-//function
-
-//rand()%names.size()
-
