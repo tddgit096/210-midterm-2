@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <time.h>
 using namespace std;
 
 const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
@@ -152,6 +153,15 @@ public:
         delete temp;
     }
 
+    void serve_front() {
+        if (!head) {
+            cout << "List is empty." << endl;
+            return;
+        }
+        cout<<head->data<<" is served.\n";
+        pop_front();
+    }
+
     void pop_back() {
         if (!tail) {
             cout << "List is empty." << endl;
@@ -202,7 +212,10 @@ public:
     }
 };
 
+string randomname(vector <string>);
+
 int main() {
+    srand(time(NULL));
     DoublyLinkedList CoffeeShop;
     //populate list of random names into vector
     vector <string> names;
@@ -214,16 +227,17 @@ int main() {
             names.push_back(line);
     }
 
-    for(int minute=0;minute<MAXTIME;minute++)
-        if(minute<FIRSTCUSTOMERS){
+    for(int minute=0;minute<MAXTIME;minute++) 
+        if(minute<FIRSTCUSTOMERS){ //the first five minutes
             CoffeeShop.push_back(randomname(names));
             continue;
         }
-
-    /*
+        //after the first five minutes:
         //help customer
         if((rand()%100+1) < HELPCUSTOMERPROB) {
+            CoffeeShop.serve_front();
         }
+        /*
         //new customer
         if((rand()%100+1) < NEWCUSTOMERPROB){
         }
@@ -234,6 +248,7 @@ int main() {
         if((rand()%100+1) < ANYCUSTOMERLEAVEPROB){
         }
     */
+    CoffeeShop.print();
     return 0;
 }
 
