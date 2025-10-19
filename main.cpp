@@ -1,7 +1,10 @@
 #include <iostream>
+#include <fstream>
+#include <vector>
 using namespace std;
 
 const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
+const int FIRSTCUSTOMERS = 5, MAXTIME = 20;
 
 class DoublyLinkedList {
 private:
@@ -199,8 +202,17 @@ public:
 };
 
 int main() {
-    cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS;  // dummy statement to avoid compiler warning
+    DoublyLinkedList CoffeeShop;
+    //populate list of random names into vector
+    vector <string> names;
+    for
 
+
+    for(int minute=0;minute<MAXTIME;minute++)
+        if(minute<FIRSTCUSTOMERS){
+            CoffeeShop.push_back();
+        }
+    }
     
     return 0;
 }
