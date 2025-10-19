@@ -108,7 +108,11 @@ public:
             pop_back();
             return;
         }
-    
+        if(!temp->prev){
+            pop_front();
+            return;
+        }
+
         Node* tempPrev = temp->prev;
         tempPrev->next = temp->next;
         temp->next->prev = tempPrev;
@@ -119,7 +123,7 @@ public:
         if (!head) {
             cout << "List is empty." << endl;
             return;
-        }    
+        }
         Node* temp = head;
         for (int i = 1; i < pos; i++){
             if (!temp) {
@@ -207,6 +211,10 @@ public:
     }
     //leave end of line outputs the status of the customer leaving the rear of the line then calls pop_back on them.
     void leave_end_of_line(){
+        if (!tail) {
+            cout << "List is empty." << endl;
+            return;
+        }
         cout<<"\t"<<tail->data<<" exits the rear of the line.\n";
         pop_back();
     }
@@ -299,7 +307,8 @@ int main() {
         }
         //Customer at any point of line leaves
         if((rand()%100+1) < ANYCUSTOMERLEAVEPROB){
-            CoffeeShop.leave_line(rand()%CoffeeShop.getListSize());
+            if(CoffeeShop.getListSize()) //can't modulo by 0,
+                CoffeeShop.leave_line(rand()%(CoffeeShop.getListSize()+1));
         }
         if((rand()%100+1) < VIPPROB){
             CoffeeShop.VIP_joins(randomname(names));
