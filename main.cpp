@@ -5,7 +5,7 @@
 using namespace std;
 
 const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
-const int FIRSTCUSTOMERS = 5, MAXTIME = 20;
+const int FIRSTCUSTOMERS = 5, MAXTIME = 20, OPENINGTIME = 1;
 const int HELPCUSTOMERPROB = 40, NEWCUSTOMERPROB = 60, LASTCUSTOMERLEAVEPROB = 20, ANYCUSTOMERLEAVEPROB=10, VIPPROB = 10;
 
 class DoublyLinkedList {
@@ -123,6 +123,11 @@ public:
             tail = newNode;
         }
     }
+
+    void join_line(string v){
+        cout<<"\t"<<v<<" joins the line.\n";
+        push_back(v);
+    }
     
     void push_front(string v) {
         Node* newNode = new Node(v);
@@ -158,7 +163,7 @@ public:
             cout << "List is empty." << endl;
             return;
         }
-        cout<<head->data<<" is served.\n";
+        cout<<"\t"<<head->data<<" is served.\n";
         pop_front();
     }
 
@@ -191,11 +196,11 @@ public:
             cout << "List is empty." << endl;
             return;
         }
+        cout<<"\tResulting Line:\n";
         while (current) {
-            cout << current->data << " ";
+            cout <<"\t\t"<<current->data << endl;
             current = current->next;
         }
-        cout << endl;
     }
 
     void print_reverse() {
@@ -226,15 +231,20 @@ int main() {
         while(getline(file,line))
             names.push_back(line);
     }
+    for(int minute=0;minute<MAXTIME;minute++){
+        if(minute<OPENINGTIME){ //the opening time has a number of FIRSTCUSTOMERS arrive.
+            cout<<"Store Opens:\n";
+            for(int i=0;i<FIRSTCUSTOMERS;i++){
+                CoffeeShop.join_line(randomname(names));
+            }
+                CoffeeShop.print();
 
-    for(int minute=0;minute<MAXTIME;minute++) 
-        if(minute<FIRSTCUSTOMERS){ //the first five minutes
-            CoffeeShop.push_back(randomname(names));
             continue;
         }
+        cout<<""
         //after the first five minutes:
         //help customer
-        if((rand()%100+1) < HELPCUSTOMERPROB) {
+        if((rand()%100)+1 < HELPCUSTOMERPROB) {
             CoffeeShop.serve_front();
         }
         /*
@@ -249,6 +259,7 @@ int main() {
         }
     */
     CoffeeShop.print();
+    }
     return 0;
 }
 
